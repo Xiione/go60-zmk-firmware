@@ -720,11 +720,11 @@ int zmk_rgb_underglow_toggle(void) {
 #if IS_ENABLED(UNDERGLOW_LAYER_ENABLED)
 
 static struct led_rgb hex_to_rgb(uint8_t r, uint8_t g, uint8_t b) {
-    struct zmk_led_hsb hsb = state.color;
+    struct zmk_led_hsb hsb = hsb_scale_min_max(state.color);
     return (struct led_rgb){
-        r : (hsb.b * (r)) / 0xff,
-        g : (hsb.b * (g)) / 0xff,
-        b : (hsb.b * (b)) / 0xff
+        r : (hsb.b * (r)) / BRT_MAX,
+        g : (hsb.b * (g)) / BRT_MAX,
+        b : (hsb.b * (b)) / BRT_MAX
     };
 }
 
